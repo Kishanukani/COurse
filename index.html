@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+
+    <title>Document</title>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Navbar</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        <a class="nav-link" href="#">Features</a>
+                        <a class="nav-link" href="#">Pricing</a>
+                        <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div class="container  mt-5 col-6">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="chapter name" aria-label="Recipient's username"
+                    aria-describedby="button-addon2">
+                <button id="addbtn" class="btn btn-outline-success" type="button" id="button-addon2">ADD</button>
+            </div>
+            <ul id="parent" class="list-group">
+                <li class="list-group-item d-flex justify-content-between">
+                    <h3 class="flex-grow-1">chapter 1</h3>
+                    <button class="btn btn-warning mx-2" onclick="editChapter(this)">edit</button>
+                    <button class="btn btn-danger" onclick="removechapter(this)">X</button>
+
+                </li>
+            </ul>
+        </div>
+    </main>
+    <script>
+        let addbtn = document.getElementById('addbtn')
+
+        addbtn.addEventListener('click', addchapter)
+        let parent = document.getElementById('parent')
+
+        function addchapter(e) {
+            // console.log(e);
+            if (parent.children[0].className == 'emptMsg') {
+                parent.children[0].remove()
+            }
+            let currentBtn = e.currentTarget
+            let currentInput = currentBtn.previousElementSibling
+            let currentChapter = currentInput.value
+            // console.log(currentInput.value);
+            let newlist = document.createElement('li')
+            newlist.className = "list-group-item d-flex justify-content-between"
+            newlist.innerHTML = `<h3 class="flex-grow-1">${currentChapter}</h3>
+                    <button class="btn btn-warning mx-2">edit</button>
+                    <button class="btn btn-danger" onclick = 'removechapter(this)'>X</button>`
+
+            parent.appendChild(newlist)
+
+        }
+
+        function removechapter(currentElement) {
+            // alert
+            let result = confirm(" do uwaqnt to delet??")
+            let parent = document.getElementById('parent')
+
+            if (result == true) {
+                currentElement.parentElement.remove()
+            }
+            if (parent.children.length <= 0) {
+                let emptMsg = document.createElement('h3')
+                emptMsg.classList.add('emptMsg')
+                emptMsg.textContent = "STREAM is Empty "
+                parent.appendChild(emptMsg)
+            }
+            else {
+
+
+            }
+
+        }
+
+        function editChapter(currentElement) {
+            // console.log(currentElement.previousElementSibling);
+            if (currentElement.textContent == 'Done') {
+                currentElement.textContent = 'edit'
+                let currentChaptername = currentElement.previousElementSibling.value
+                let currentHeading = document.createElement('h3')
+                currentHeading.className = "flex-grow-1"
+                currentHeading.textContent = currentChaptername
+                currentElement.parentElement.replaceChild(currentHeading, currentElement.previousElementSibling)
+
+            }
+            else {
+                currentElement.textContent = 'Done'
+                let currentChaptername = currentElement.previousElementSibling.textContent
+                let currentInput = document.createElement('input')
+                currentInput.type = "text"
+                // currentHeading.className = "flex-grow-1"
+                currentInput.placeholder = `Chapter name`
+                currentInput.className = 'form-control'
+                currentInput.value = currentChaptername
+                currentElement.parentElement.replaceChild(currentInput, currentElement.previousElementSibling)
+
+            }
+        }
+    </script>
+</body>
+
+</html>
